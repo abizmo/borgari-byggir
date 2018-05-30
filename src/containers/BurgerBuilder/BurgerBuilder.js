@@ -64,7 +64,7 @@ class BurgerBuilder extends Component {
             price = { this.props.totalPrice }
             purchasable = { this.isPurchasable(this.props.ingredients) }
             ordered = { this.purchaseOrderHandler }
-            isLogged = { this.props.isLogged }/>
+            isLogged = { this.props.isAuthenticated }/>
         </Aux>
       );
       ordering = <OrderSummary

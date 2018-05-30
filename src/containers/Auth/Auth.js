@@ -90,7 +90,6 @@ class Auth extends Component {
   }
 
   render () {
-    console.log(this.props.authRedirectPath)
     if (this.props.idToken)
       return <Redirect to={this.props.authRedirectPath} />;
     let inputs = [];
