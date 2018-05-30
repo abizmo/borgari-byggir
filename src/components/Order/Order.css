@@ -1,0 +1,17 @@
+.Order {
+  width: 80%;
+  margin: 4px auto;
+  padding: 8px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 2px #ccc;
+}
+
+.Order span {
+  padding: 4px;
+  margin: 2px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  display: inline-block;
+}

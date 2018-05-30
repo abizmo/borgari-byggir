@@ -1,0 +1,29 @@
+.Input {
+  text-align: right;
+  width: 75%;
+  margin: 0 auto;
+}
+.Input span{
+  font-size: 10px;
+  color: orangered;
+  text-transform: uppercase;
+}
+
+.Input input,
+.Input select {
+  width: 100%;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+  display: block;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 12px;
+  background-color: transparent;
+}
+
+.Input.invalid input,
+.Input.invalid select {
+  border: 1px solid orangered;
+  box-shadow: 0 2px 2px rgba(255,69, 0, 0.5);
+}
