@@ -24,6 +24,9 @@ export const authFail = (err) => {
 };
 
 export const logout = () => {
+  localStorage.removeItem('bb-token');
+  localStorage.removeItem('bb-user');
+  localStorage.removeItem('bb-expirationDate');
   return {
     type: actionTypes.AUTH_LOGOUT
   };
@@ -48,6 +51,10 @@ export const auth = (email, password, isSingUp) => {
 
     axios.post(url, payload)
       .then(res => {
+        localStorage.setItem('bb-token', res.data.idToken);
+        localStorage.setItem('bb-user', res.data.localId);
+        const expirationDate = new Date (new Date().getTime() + res.data.expiresIn * 1000);
+        localStorage.setItem('bb-expirationDate', expirationDate);
         dispatch(authSuccess(res.data.idToken, res.data.localId));
         dispatch(checkExpiredToken(res.data.expiresIn));
       })
@@ -59,5 +66,20 @@ export const setAuthRedirectPath = (path) => {
   return {
     type: actionTypes.SET_AUTH_REDIRECT_PATH,
     path: path
+  };
+};
+
+export const tryAutoAuthentication = () => {
+  return dispatch => {
+    const token = localStorage.getItem('bb-token');
+    if (!token)
+      return dispatch(logout());
+    const expirationDate = new Date(localStorage.getItem('bb-expirationDate')).getTime();
+    const expiresIn = (expirationDate - new Date().getTime()) / 1000;
+    if (expiresIn <= 0)
+      return dispatch(logout());
+    const userId = localStorage.getItem('bb-user');
+    dispatch(authSuccess(token, userId));
+    dispatch(checkExpiredToken(expiresIn));
   };
 };
