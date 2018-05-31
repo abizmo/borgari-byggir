@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
 import Layout from './components/Layout';
 import { BurgerBuilder, Checkout, Orders, Auth, Logout } from './containers';
 import { tryAutoAuthentication } from './store/actions/auth';
@@ -10,8 +10,7 @@ class App extends Component {
   componentDidMount () {
     this.props.onTryAutoAuthentication();
   };
-  // TODO: Corregir la path de /auth que no deberia de aparecer en el
-  // primer grupo. Pero si no no redirige a BurgerBuilder
+  
   render() {
     return (
       <div>
@@ -23,12 +22,13 @@ class App extends Component {
                 <Route path="/checkout" component={Checkout}/>
                 <Route path="/orders" component={Orders}/>
                 <Route path="/logout" component={Logout}/>
-                <Route path="/auth" component={Auth}/>
                 <Route path="/" exact component={BurgerBuilder}/>
+                <Route render={ () => <Redirect to="/" /> } />
               </Aux> :
               <Aux>
                 <Route path="/auth" component={Auth}/>
                 <Route path="/" exact component={BurgerBuilder}/>
+                <Route render={ () => <Redirect to="/" /> } />
               </Aux>
             }
           </Switch>

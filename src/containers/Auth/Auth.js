@@ -90,7 +90,7 @@ class Auth extends Component {
   }
 
   render () {
-    if (this.props.idToken)
+    if (this.props.isLogged)
       return <Redirect to={this.props.authRedirectPath} />;
     let inputs = [];
     let validForm = true;
@@ -154,8 +154,7 @@ class Auth extends Component {
 
 const mapStateToProps = state => {
   return {
-    idToken: state.auth.idToken,
-    userId: state.auth.userId,
+    isLogged: state.auth.idToken !== null,
     error: state.auth.error,
     loading: state.auth.loading,
     authRedirectPath: state.auth.authRedirectPath,
