@@ -113,6 +113,7 @@ class ContactData extends Component {
       customer: {
         name: name.value,
         email: email.value,
+        userId: this.props.userId,
         address: {
           street: street.value,
           zipCode: zipCode.value,
@@ -202,7 +203,8 @@ const mapStateToProps = state => {
     ingredients: state.burgerBuilder.ingredients,
     totalPrice: state.burgerBuilder.price,
     ordering: state.orders.ordering,
-    idToken: state.auth.idToken
+    idToken: state.auth.idToken,
+    userId: state.auth.userId
   };
 };
 
