@@ -1,6 +1,5 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
-const API_KEY = 'AIzaSyA4uuBRCtoIRVe1l2RJt84Qah1UG4jl-Mo';
 
 export const authStart = () => {
   return {
@@ -42,7 +41,7 @@ export const auth = (email, password, isSingUp) => {
   return dispatch => {
     dispatch(authStart());
     const endPoint = isSingUp ? "signupNewUser" : "verifyPassword";
-    const url = `https://www.googleapis.com/identitytoolkit/v3/relyingparty/${endPoint}?key=${API_KEY}`;
+    const url = `https://www.googleapis.com/identitytoolkit/v3/relyingparty/${endPoint}?key=${process.env.REACT_APP_FIREBASE_API_KEY}`;
     const payload = {
       email,
       password,
