@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 
-import { Aux } from '../../utils';
+import { Aux, checkValidity } from '../../utils';
 import { Button, Input, Spinner } from '../../components/UI';
 import classes from './Auth.css';
 import { auth, setAuthRedirectPath } from '../../store/actions/auth';
@@ -50,27 +49,11 @@ class Auth extends Component {
     this.props.onAuth(email, pwd, this.state.isSingUp);
   }
 
-  validate = element => {
-    if (!element.validation)
-      return true;
-    let valid = true;
-
-    if (element.validation.required)
-      valid = element.value.trim() !== "" && valid;
-    if (element.validation.length) {
-      if (element.validation.length.min)
-        valid = element.value.length >= element.validation.length.min && valid;
-      if (element.validation.length.max)
-        valid = element.value.length <= element.validation.length.max && valid;
-    }
-    return valid;
-  };
-
   inputChangeHandler = (e, elementId) => {
     const elements = {...this.state.elements};
     const element = elements[elementId];
     element.value = e.target.value;
-    element.valid = this.validate(element);
+    element.valid = checkValidity(element);
     this.setState({ elements });
   }
 
@@ -90,8 +73,6 @@ class Auth extends Component {
   }
 
   render () {
-    if (this.props.isLogged)
-      return <Redirect to={this.props.authRedirectPath} />;
     let inputs = [];
     let validForm = true;
 
@@ -154,7 +135,6 @@ class Auth extends Component {
 
 const mapStateToProps = state => {
   return {
-    isLogged: state.auth.idToken !== null,
     error: state.auth.error,
     loading: state.auth.loading,
     authRedirectPath: state.auth.authRedirectPath,

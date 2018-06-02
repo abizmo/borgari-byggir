@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Spinner, Input } from '../../../components/UI';
-import { Aux, withErrorsHandler } from '../../../utils';
+import { Aux, withErrorsHandler, checkValidity } from '../../../utils';
 import classes from './ContactData.css';
 import axios from '../../../routes/orders';
 import * as ordersActions from '../../../store/actions/orders';
@@ -126,27 +126,11 @@ class ContactData extends Component {
     this.props.onPurchaseBurger(order, this.props.idToken);
   }
 
-  validate = element => {
-    if (!element.validation)
-      return true;
-    let valid = true;
-
-    if (element.validation.required)
-      valid = element.value.trim() !== "" && valid;
-    if (element.validation.length) {
-      if (element.validation.length.min)
-        valid = element.value.length >= element.validation.length.min && valid;
-      if (element.validation.length.max)
-        valid = element.value.length <= element.validation.length.max && valid;
-    }
-    return valid;
-  };
-
   inputChangeHandler = (e, elementId) => {
     const elements = {...this.state.elements};
     const element = elements[elementId];
     element.value = e.target.value;
-    element.valid = this.validate(element);
+    element.valid = checkValidity(element);
     this.setState({ elements });
   }
 
