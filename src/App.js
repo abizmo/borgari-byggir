@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
 import Layout from './components/Layout';
-import { BurgerBuilder, Checkout, Orders, Auth, Logout } from './containers';
+import { BurgerBuilder, Logout } from './containers';
 import { tryAutoAuthentication } from './store/actions/auth';
+import { asyncComponent } from './utils';
+
+const Checkout = asyncComponent(() => import('./containers/Checkout'));
+const Orders = asyncComponent(() => import('./containers/Orders'));
+const Auth = asyncComponent(() => import('./containers/Auth'));
 
 class App extends Component {
   componentDidMount () {
