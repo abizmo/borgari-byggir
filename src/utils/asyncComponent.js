@@ -9,7 +9,6 @@ const asyncComponent = (importComponent) => {
     componentDidMount () {
       importComponent()
         .then(comp => {
-          console.log('por aqui')
           this.setState({ component: comp.default });
         });
     };

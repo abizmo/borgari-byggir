@@ -7,7 +7,7 @@ import axios from '../../routes/orders';
 import * as burgerBuilderActions from '../../store/actions/burgerBuilder';
 import { setAuthRedirectPath } from '../../store/actions/auth';
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
   constructor () {
     super();
     this.state = {
